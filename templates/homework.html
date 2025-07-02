@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Weekly Homework Board</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; }
+    textarea, select, button { width: 100%; margin-bottom: 1rem; padding: 0.5rem; font-size: 1rem; }
+    .post { background: #e9f0ff; padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 5px; }
+    h2 { border-left: 6px solid #0077ff; padding-left: 8px; color: #0077ff; }
+  </style>
+</head>
+<body>
+  <h1>📅 Weekly Homework Board</h1>
+  <form method="post">
+    <select name="day" required>
+      <option value="">Choose day</option>
+      <option>Monday</option>
+      <option>Tuesday</option>
+      <option>Wednesday</option>
+      <option>Thursday</option>
+      <option>Friday</option>
+    </select>
+    <textarea name="text" placeholder="Type homework..." required></textarea>
+    <button type="submit">Post</button>
+  </form>
+
+  {% if homeworks %}
+    {% for day, posts in homeworks.items() %}
+      <h2>{{ day }}</h2>
+      {% for post in posts %}
+        <div class="post">
+          {{ post.text }}<br />
+          <small>Posted on {{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+        </div>
+      {% endfor %}
+    {% endfor %}
+  {% else %}
+    <p>No homework posted yet.</p>
+  {% endif %}
+</body>
+</html>

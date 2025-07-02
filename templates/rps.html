@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors</title>
+  <style>
+    body {
+      background-color: rgb(25, 25, 25);
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+    .title { font-size: 30px; font-weight: bold; margin-bottom: 20px; }
+    .move-icon { height: 50px; vertical-align: middle; }
+    .score, .result { margin-top: 30px; font-size: 20px; }
+    input[type="submit"] {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .move-options label {
+      margin: 0 15px;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="title">Rock Paper Scissors</p>
+
+  <form method="POST">
+    <input type="text" name="name" placeholder="Enter your name" required><br><br>
+
+    <div class="move-options">
+      <label>
+        <input type="radio" name="choice" value="rock" required>
+        <img src="{{ url_for('static', filename='images/rock.png') }}" class="move-icon"> Rock
+      </label>
+      <label>
+        <input type="radio" name="choice" value="paper">
+        <img src="{{ url_for('static', filename='images/paper.png') }}" class="move-icon"> Paper
+      </label>
+      <label>
+        <input type="radio" name="choice" value="scissor">
+        <img src="{{ url_for('static', filename='images/scissor.png') }}" class="move-icon"> Scissors
+      </label>
+    </div>
+
+    <input type="submit" value="Play">
+  </form>
+
+  {% if result %}
+    <div class="result">
+      <p>{{ player_name }} chose: {{ player_choice }}</p>
+      <p>Computer chose: {{ comp_choice }}</p>
+      <p><strong>{{ result }}</strong></p>
+    </div>
+  {% endif %}
+
+  {% if player %}
+    <div class="score">
+      <p>Score for <strong>{{ player.name }}</strong>:</p>
+      <p>Wins: {{ player.wins }} | Losses: {{ player.losses }} | Ties: {{ player.ties }}</p>
+    </div>
+  {% endif %}
+
+</body>
+</html>
