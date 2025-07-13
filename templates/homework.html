@@ -1,43 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Weekly Homework Board</title>
+  <title>Weekly Homework Board | 12b</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; }
-    textarea, select, button { width: 100%; margin-bottom: 1rem; padding: 0.5rem; font-size: 1rem; }
-    .post { background: #e9f0ff; padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 5px; }
-    h2 { border-left: 6px solid #0077ff; padding-left: 8px; color: #0077ff; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #e9dcd3, #f3e7de, #decfc5);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      min-height: 100vh;
+    }
+    @keyframes gradientShift {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
   </style>
 </head>
-<body>
-  <h1>📅 Weekly Homework Board</h1>
-  <form method="post">
-    <select name="day" required>
-      <option value="">Choose day</option>
-      <option>Monday</option>
-      <option>Tuesday</option>
-      <option>Wednesday</option>
-      <option>Thursday</option>
-      <option>Friday</option>
-    </select>
-    <textarea name="text" placeholder="Type homework..." required></textarea>
-    <button type="submit">Post</button>
-  </form>
+<body class="text-black min-h-screen">
 
-  {% if homeworks %}
-    {% for day, posts in homeworks.items() %}
-      <h2>{{ day }}</h2>
-      {% for post in posts %}
-        <div class="post">
-          {{ post.text }}<br />
-          <small>Posted on {{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
-        </div>
-      {% endfor %}
-    {% endfor %}
-  {% else %}
-    <p>No homework posted yet.</p>
-  {% endif %}
-</body>
-</html>
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center px-8 py-6 bg-white bg-opacity-30 backdrop-blur-md sticky top-0 z-50">
+    <div class="text-2xl font-bold">12b</div>
+    <ul class="flex space-x-6 text-sm md:text-base">
+      <li><a href="{{ url_for('home') }}" class="hover:text-gray-700 transition">Home</a></li>
+      <li><a href="#timetable" class="hover:text-gray-700 transition">TIME TABLE</a></li>
+      <li><a href="{{ url_for('homework') }}" class="font-semibold underline text-purple-700">HOMEWORK</a></li>
+      <li><a href="#contact" class="hover:text-gray-700 transition">RANDOM</a></li>
+    </ul>
+  </nav>
+
+  <main class="max-w-3xl mx-auto px-6 py-16 bg-white bg-opacity-30 rounded-xl shadow-lg my-12">
+    <h1 class="text-4xl font-semibold mb-8 text-center text-purple-700 border-l-8 border-purple-500 pl-4">
+      📅 Weekly Homework Board
+    </h1>
+
+    <form method="post" class="space-y-6" id="homeworkForm">
+      <select
+        id="daySelect"
+        name="day"
+        required
+        class="w-full rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 transition"
+        onchange="updateSelectColor()"
+      >
+        <option value="" disabled selected>Choose day</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+      </select>
+
+      <textarea
+        name="text"
+        placeholder="Type homework..."
+        required
+        class="w-full rounded-md border border-gray-300 px-4 py-2 resize-y focus:outline-none focus:ring-2 transition"
+        rows="4"
+      ></textarea>
+
+      <button
+        type="submit"
+        class="w-full bg-purple-600 text-white py-3 rounded-md font-semibold hover:bg-purple-700 transition"
+      >
+        Post
+      </button>
+    </form>
+
+    <section id="postsSection" class="mt-12">
+      {% if homeworks %}
+        {% for day, posts in homeworks.items() %}
+          {% set color = day_colors[day] if day in day_colors else '#000000' %}
+          <h2 class="text-2xl font-semibold border-l-4 pl-3 mb-4 mt-8"
+              style="border-color: {{ color }}; color: {{ color }};">
+            {{ day }}
+          </h2>
+          {% for post in posts %}
+            <article
+              class="p-4 rounded-md mb-3 shadow-sm hover:shadow-md transition"
+              style="background-color: {{ color }}33; border-left: 6px solid {{ color }};"
+            >
+              <p>{{ post.text }}</p>
+              <small class="text-gray-600 block mt-2">
+                Posted on {{ post.timestamp.strftime('%Y-%m-%d %H:%M') }}
+              </small>
+            </article>
+          {% endfor %}
+        {% endfor %}
+      {% else %}
+        <p class="text-center text-gray-600 mt-8">No homework posted yet.</p>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer class="bg-white bg-opacity-40 py-10 text-center text-gray-700 text-sm max-w-3xl mx-auto rounded-xl">
+    <p class="mb-2">LEGENDS</p>
+    <div class="flex justify-center space-x-6 text-black font-semibold">
+      <span></span>
+      <span></span>
+      <span>COOLUBBA</span>
+      <span></span>
+    </div>
+    <p class="mt-6 text-xs">&copy; COOLUBBA Inc. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const dayColors = {
+      Monday: '#ef4444',
+      Tuesday: '#f59e0b',
+      Wednesday: '#10b981',
+      Thursday: '#3b82f6',
+      Friday: '#8b5cf6'
+    };
+
+    function updateSelectColor() {
+      const select = document.getElementById('daySelect');
+      const day = select.value;
+      if (dayColors[day]) {
+        select.style.borderColor = dayColors[day];
+        select.style.color = dayColors[day];
+      } else {
+        select.style.borderColor = '';
+        select.style.color = '';
+      }
+    }
+
+    document.addEv

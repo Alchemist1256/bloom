@@ -1,45 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">>
-    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COOLUBBA | 12b</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .bg-blur {
+        background: linear-gradient(145deg, #e9dcd3, #f3e7de, #decfc5);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+      }
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .reflection {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(255,255,255,0));
+        backdrop-filter: blur(8px);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .hero-3d {
+        background-image: url('https://images.unsplash.com/photo-1612837017391-87662a31ee2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        z-index: 1;
+      }
+    </style>
   </head>
-  <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{{ url_for('home') }}">Search</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" 
-          data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" 
-          aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Хуваарь</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('homework') }}">Homework</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" 
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          GAME
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{{ url_for('rps') }}">ROCK-PAPER-SCISSOR</a>
-          <a class="dropdown-item" href="#">yu ch yum</a>
-          <a class="dropdown-item" href="#">yu ch yum</a>
-        </div>
-      </li>
-    </ul>
-  </div>
-</nav>
+  <body class="text-black bg-blur min-h-screen relative">
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center px-8 py-6 bg-white bg-opacity-30 backdrop-blur-md sticky top-0 z-50">
+      <div class="text-2xl font-bold">12b</div>
+      <ul class="flex space-x-6 text-sm md:text-base">
+        <li><a href="{{ url_for('home') }}" class="hover:text-gray-700 transition">Home</a></li>
+        <li><a href="#about" class="hover:text-gray-700 transition">TIME TABLE</a></li>
+        <li><a href="{{ url_for('homework') }}" class="hover:text-gray-700 transition">HOMEWORK</a></li>
+        <li><a href="{{ url_for('random_games') }}" class="hover:text-gray-700 transition">RANDOM</a></li>
+      </ul>
+    </nav>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Hero / Intro Section with 3D visual background -->
+    <section
+      id="home"
+      class="hero-3d flex flex-col justify-center items-center text-center h-screen px-6 text-white"
+    >
+      <div
+        class="backdrop-blur-sm bg-black bg-opacity-20 p-6 rounded-xl z-10 max-w-3xl"
+      >
+        <h1 class="text-4xl md:text-6xl font-semibold mb-6">
+          Fortune may favor the prepared
+        </h1>
+        <p class="text-lg md:text-xl text-gray-200 max-w-2xl mb-8">шинэлэг байдал</p>
+        <a
+          href="#contact"
+          class="bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-gray-200 transition"
+          >LOGIN</a
+        >
+      </div>
+      <div class="reflection"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 text-center bg-white bg-opacity-20 max-w-3xl mx-auto rounded-xl">
+      <h2 class="text-3xl font-semibold mb-4">About Us</h2>
+      <p class="text-gray-800 max-w-3xl mx-auto">coming soon..</p>
+    </section>
+
+    <!-- Features Section -->
+    <section
+      id="features"
+      class="py-20 px-6 text-center max-w-6xl mx-auto rounded-xl"
+    >
+      <h2 class="text-3xl font-semibold mb-12">Features</h2>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="bg-white bg-opacity-60 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-2">ANGIIN BAGSH</h3>
+          <p class="text-gray-800">coming soon..</p>
+        </div>
+        <div class="bg-white bg-opacity-60 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-2">ANGIIN DARGA</h3>
+          <p class="text-gray-800">coming soon..</p>
+        </div>
+        <div class="bg-white bg-opacity-60 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-2">COOLUBBA</h3>
+          <p class="text-gray-800">ALWAYS COOL</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section
+      id="contact"
+      class="py-20 px-6 text-center bg-white bg-opacity-20 max-w-3xl mx-auto rounded-xl"
+    >
+      <h2 class="text-3xl font-semibold mb-4">EXPLORE</h2>
+      <p class="text-gray-800 mb-6">Have questions? Want early access? Let’s talk.</p>
+      <a href="mailto:coolubba@gmail.com" class="text-black underline"
+        >coolubba@gmail.com</a
+      >
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="bg-white bg-opacity-40 py-10 text-center text-gray-700 text-sm max-w-3xl mx-auto rounded-xl"
+    >
+      <p class="mb-2">LEGENDS</p>
+      <div class="flex justify-center space-x-6 text-black font-semibold">
+        <span></span>
+        <span></span>
+        <span>COOLUBBA</span>
+        <span></span>
+      </div>
+      <p class="mt-6 text-xs">&copy; COOLUBBA Inc. All rights reserved.</p>
+    </footer>
   </body>
 </html>

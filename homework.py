@@ -6,7 +6,9 @@ import random
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///appdata.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
+
 class Homework(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     day = db.Column(db.String(20), nullable=False)
@@ -19,7 +21,6 @@ class Player(db.Model):
     wins = db.Column(db.Integer, default=0)
     losses = db.Column(db.Integer, default=0)
     ties = db.Column(db.Integer, default=0)
-
 
 @app.route("/")
 def home():
@@ -84,14 +85,17 @@ def rps():
 
         db.session.commit()
 
-        player = Player.query.filter_by(name=player_name).first()
-
     else:
         player = None
 
     return render_template("rps.html", result=result, comp_choice=comp_choice,
                            player_choice=player_choice, player_name=player_name,
                            player=player)
+
+@app.route("/random")
+def random_games():
+    return render_template("random.html")
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()

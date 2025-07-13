@@ -1,71 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Rock Paper Scissors</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rock Paper Scissors | COOLUBBA</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     body {
-      background-color: rgb(25, 25, 25);
-      color: white;
-      font-family: Arial;
-      text-align: center;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #e9dcd3, #f3e7de, #decfc5);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
     }
-    .title { font-size: 30px; font-weight: bold; margin-bottom: 20px; }
-    .move-icon { height: 50px; vertical-align: middle; }
-    .score, .result { margin-top: 30px; font-size: 20px; }
-    input[type="submit"] {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .move-options label {
-      margin: 0 15px;
-      cursor: pointer;
-    }
-    input[type="radio"] {
-      margin-right: 5px;
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
   </style>
 </head>
-<body>
+<body class="text-black min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center px-8 py-6 bg-white bg-opacity-30 backdrop-blur-md sticky top-0 z-50">
+    <div class="text-2xl font-bold">12b</div>
+    <ul class="flex space-x-6 text-sm md:text-base">
+      <li><a href="{{ url_for('home') }}" class="hover:text-gray-700 transition">Home</a></li>
+      <li><a href="{{ url_for('homework') }}" class="hover:text-gray-700 transition">Homework</a></li>
+      <li><a href="{{ url_for('random_games') }}" class="hover:text-gray-700 transition font-semibold">Random</a></li>
+    </ul>
+  </nav>
 
-  <p class="title">Rock Paper Scissors</p>
+  <!-- Game Section -->
+  <main class="flex-grow px-4 md:px-0 max-w-2xl mx-auto py-12 text-center">
+    <h1 class="text-4xl font-bold mb-8">🧠 Rock Paper Scissors</h1>
 
-  <form method="POST">
-    <input type="text" name="name" placeholder="Enter your name" required><br><br>
+    <form method="POST" class="space-y-8">
+      <input
+        type="text"
+        name="name"
+        placeholder="Enter your name"
+        required
+        class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
+      />
 
-    <div class="move-options">
-      <label>
-        <input type="radio" name="choice" value="rock" required>
-        <img src="{{ url_for('static', filename='images/rock.png') }}" class="move-icon"> Rock
-      </label>
-      <label>
-        <input type="radio" name="choice" value="paper">
-        <img src="{{ url_for('static', filename='images/paper.png') }}" class="move-icon"> Paper
-      </label>
-      <label>
-        <input type="radio" name="choice" value="scissor">
-        <img src="{{ url_for('static', filename='images/scissor.png') }}" class="move-icon"> Scissors
-      </label>
-    </div>
+      <div class="flex justify-center gap-6">
+        <label class="cursor-pointer">
+          <input type="radio" name="choice" value="rock" class="hidden peer" required />
+          <div class="bg-white p-4 rounded-lg shadow hover:shadow-md transition peer-checked:ring-2 peer-checked:ring-purple-600">
+            <img src="{{ url_for('static', filename='images/rock.png') }}" class="w-16 h-16 mx-auto" alt="Rock">
+            <p class="mt-2 font-semibold">Rock</p>
+          </div>
+        </label>
+        <label class="cursor-pointer">
+          <input type="radio" name="choice" value="paper" class="hidden peer" />
+          <div class="bg-white p-4 rounded-lg shadow hover:shadow-md transition peer-checked:ring-2 peer-checked:ring-purple-600">
+            <img src="{{ url_for('static', filename='images/paper.png') }}" class="w-16 h-16 mx-auto" alt="Paper">
+            <p class="mt-2 font-semibold">Paper</p>
+          </div>
+        </label>
+        <label class="cursor-pointer">
+          <input type="radio" name="choice" value="scissors" class="hidden peer" />
+          <div class="bg-white p-4 rounded-lg shadow hover:shadow-md transition peer-checked:ring-2 peer-checked:ring-purple-600">
+            <img src="{{ url_for('static', filename='images/scissor.png') }}" class="w-16 h-16 mx-auto" alt="Scissors">
+            <p class="mt-2 font-semibold">Scissors</p>
+          </div>
+        </label>
+      </div>
 
-    <input type="submit" value="Play">
-  </form>
+      <button type="submit" class="bg-purple-700 text-white px-6 py-2 rounded-full hover:bg-purple-800 transition">
+        Play
+      </button>
+    </form>
 
-  {% if result %}
-    <div class="result">
-      <p>{{ player_name }} chose: {{ player_choice }}</p>
-      <p>Computer chose: {{ comp_choice }}</p>
-      <p><strong>{{ result }}</strong></p>
-    </div>
-  {% endif %}
+    {% if result %}
+      <div class="mt-10 p-6 bg-white bg-opacity-60 rounded-lg shadow-md">
+        <p class="text-lg font-medium">{{ player_name }} chose: <strong>{{ player_choice }}</strong></p>
+        <p class="text-lg font-medium">Computer chose: <strong>{{ comp_choice }}</strong></p>
+        <p class="text-2xl font-bold mt-4 text-purple-700">{{ result }}</p>
+      </div>
+    {% endif %}
 
-  {% if player %}
-    <div class="score">
-      <p>Score for <strong>{{ player.name }}</strong>:</p>
-      <p>Wins: {{ player.wins }} | Losses: {{ player.losses }} | Ties: {{ player.ties }}</p>
-    </div>
-  {% endif %}
+    {% if player %}
+      <div class="mt-6 bg-white bg-opacity-50 p-4 rounded text-sm">
+        <p class="font-semibold">{{ player.name }}'s Score:</p>
+        <p>Wins: {{ player.wins }} | Losses: {{ player.losses }} | Ties: {{ player.ties }}</p>
+      </div>
+    {% endif %}
+  </main>
 
+  <!-- Footer -->
+  <footer class="bg-white bg-opacity-30 text-center py-4 text-xs text-gray-700">
+    &copy; 2025 COOLUBBA. All rights reserved.
+  </footer>
 </body>
 </html>
