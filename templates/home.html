@@ -50,18 +50,39 @@
     </style>
   </head>
   <body class="text-black bg-blur min-h-screen relative">
-    <!-- Navbar -->
-    <nav class="flex justify-between items-center px-8 py-6 bg-white bg-opacity-30 backdrop-blur-md sticky top-0 z-50">
-      <div class="text-2xl font-bold">12b</div>
-      <ul class="flex space-x-6 text-sm md:text-base">
-        <li><a href="{{ url_for('home') }}" class="hover:text-gray-700 transition">Home</a></li>
-        <li><a href="#about" class="hover:text-gray-700 transition">TIME TABLE</a></li>
-        <li><a href="{{ url_for('homework') }}" class="hover:text-gray-700 transition">HOMEWORK</a></li>
-        <li><a href="{{ url_for('random_games') }}" class="hover:text-gray-700 transition">RANDOM</a></li>
-      </ul>
-    </nav>
+    <nav class="bg-white bg-opacity-30 backdrop-blur-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="text-2xl font-bold">12b</div>
+    
+    <!-- Hamburger button -->
+    <button id="menu-toggle" class="md:hidden focus:outline-none">
+      <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
 
-    <!-- Hero / Intro Section with 3D visual background -->
+    <!-- Nav Links -->
+    <ul id="menu" class="hidden md:flex space-x-6 text-sm md:text-base">
+      <li><a href="{{ url_for('home') }}" class="hover:text-gray-700 transition">Home</a></li>
+      <li><a href="#about" class="hover:text-gray-700 transition">TIME TABLE</a></li>
+      <li><a href="{{ url_for('homework') }}" class="hover:text-gray-700 transition">HOMEWORK</a></li>
+      <li><a href="{{ url_for('random_games') }}" class="hover:text-gray-700 transition">RANDOM</a></li>
+    </ul>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div id="mobile-menu" class="md:hidden hidden px-6 pb-4">
+    <ul class="flex flex-col space-y-2 text-base">
+      <li><a href="{{ url_for('home') }}" class="block hover:text-gray-700">Home</a></li>
+      <li><a href="#about" class="block hover:text-gray-700">TIME TABLE</a></li>
+      <li><a href="{{ url_for('homework') }}" class="block hover:text-gray-700">HOMEWORK</a></li>
+      <li><a href="{{ url_for('random_games') }}" class="block hover:text-gray-700">RANDOM</a></li>
+    </ul>
+  </div>
+</nav>
+
+
     <section
       id="home"
       class="hero-3d flex flex-col justify-center items-center text-center h-screen px-6 text-white"
@@ -82,13 +103,11 @@
       <div class="reflection"></div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="py-20 px-6 text-center bg-white bg-opacity-20 max-w-3xl mx-auto rounded-xl">
       <h2 class="text-3xl font-semibold mb-4">About Us</h2>
       <p class="text-gray-800 max-w-3xl mx-auto">coming soon..</p>
     </section>
 
-    <!-- Features Section -->
     <section
       id="features"
       class="py-20 px-6 text-center max-w-6xl mx-auto rounded-xl"
@@ -110,7 +129,6 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
     <section
       id="contact"
       class="py-20 px-6 text-center bg-white bg-opacity-20 max-w-3xl mx-auto rounded-xl"
@@ -122,7 +140,6 @@
       >
     </section>
 
-    <!-- Footer -->
     <footer
       class="bg-white bg-opacity-40 py-10 text-center text-gray-700 text-sm max-w-3xl mx-auto rounded-xl"
     >
@@ -135,5 +152,15 @@
       </div>
       <p class="mt-6 text-xs">&copy; COOLUBBA Inc. All rights reserved.</p>
     </footer>
+    
+<script>
+  const toggleBtn = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  toggleBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+</script>
+
   </body>
 </html>
