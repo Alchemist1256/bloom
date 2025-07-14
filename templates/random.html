@@ -1,49 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Random Games | 12b</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(145deg, #e9dcd3, #f3e7de, #decfc5);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      min-height: 100vh;
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-  </style>
-</head>
-<body class="text-black">
-  <!-- Navbar -->
-  <nav class="flex justify-between items-center px-8 py-6 bg-white bg-opacity-30 backdrop-blur-md sticky top-0 z-50">
-    <div class="text-2xl font-bold">12b</div>
-    <ul class="flex space-x-6 text-sm md:text-base">
-      <li><a href="{{ url_for('home') }}" class="hover:text-gray-700 transition">Home</a></li>
-      <li><a href="#about" class="hover:text-gray-700 transition">TIME TABLE</a></li>
-      <li><a href="{{ url_for('homework') }}" class="hover:text-gray-700 transition">HOMEWORK</a></li>
-      <li><a href="{{ url_for('random_games') }}" class="font-semibold underline text-purple-700">RANDOM</a></li>
-    </ul>
-  </nav>
+{% extends "home.html" %}
 
-  <!-- Game Grid -->
+{% block title %}RANDOM | 12b{% endblock %}
+
+{% block content %}
+<body class="text-black">
   <main class="px-6 py-12 max-w-6xl mx-auto">
     <h1 class="text-4xl font-bold mb-10 text-center">🎲 Explore Random Games</h1>
     <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-      <!-- Game 1: Rock Paper Scissors -->
       <a href="{{ url_for('rps') }}" class="bg-white bg-opacity-60 backdrop-blur-lg p-6 rounded-xl shadow-md hover:shadow-xl transition text-center">
         <img src="{{ url_for('static', filename='images/rps.png') }}" alt="RPS" class="mx-auto w-24 h-24 mb-4">
         <h2 class="text-xl font-semibold">Rock Paper Scissors</h2>
         <p class="text-gray-700 text-sm">Classic mind game vs computer</p>
       </a>
-      <!-- Placeholder for more games -->
       <div class="bg-white bg-opacity-60 p-6 rounded-xl shadow text-center opacity-50 cursor-not-allowed">
         <img src="https://via.placeholder.com/96" alt="Coming Soon" class="mx-auto w-24 h-24 mb-4">
         <h2 class="text-xl font-semibold">Coming Soon</h2>
@@ -57,4 +25,4 @@
     </div>
   </main>
 </body>
-</html>
+{% endblock %}
