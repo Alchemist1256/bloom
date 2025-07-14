@@ -82,7 +82,7 @@
   </div>
 </nav>
 
-
+  {% block content %}
     <section
       id="home"
       class="hero-3d flex flex-col justify-center items-center text-center h-screen px-6 text-white"
@@ -152,7 +152,7 @@
       </div>
       <p class="mt-6 text-xs">&copy; COOLUBBA Inc. All rights reserved.</p>
     </footer>
-    
+    {% endblock %}
 <script>
   const toggleBtn = document.getElementById("menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
